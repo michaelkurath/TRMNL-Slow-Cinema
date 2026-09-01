@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trmnl-slow-cinema",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+  "r2_buckets": [
+    {
+      "binding": "FRAMES",
+      "bucket_name": "trmnl-slow-cinema-frames",
+      "preview_bucket_name": "trmnl-slow-cinema-frames-preview"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

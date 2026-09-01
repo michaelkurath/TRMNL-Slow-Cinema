@@ -1,0 +1,14 @@
+node_modules/
+__pycache__/
+*.pyc
+.wrangler/
+.dev.vars
+dist/
+build/
+frames/
+films/
+*.zip
+*.mp4
+*.mov
+*.mkv
+*.webm

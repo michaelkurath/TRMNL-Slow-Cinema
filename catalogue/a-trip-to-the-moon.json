@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "title": "A Trip to the Moon",
+  "originalTitle": "Le Voyage dans la Lune",
+  "filmSlug": "a-trip-to-the-moon",
+  "releaseYear": 1902,
+  "director": "Georges Méliès",
+  "directorDeathYear": 1938,
+  "source": {
+    "provider": "Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Le_Voyage_dans_la_Lune_(1902).webm",
+    "runtimeSeconds": 766,
+    "sourceSha256": null,
+    "downloadVerified": false
+  },
+  "rights": {
+    "mark": "Public Domain Mark 1.0",
+    "url": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "worldwideReview": "Wikimedia Commons identifies the file as free of known copyright, related-rights and neighbouring-rights restrictions.",
+    "editionApproved": false,
+    "notes": "Approve only this exact source after hashing it. Do not substitute a modern score, colourisation, restoration or new intertitle edition without a separate review."
+  }
+}
