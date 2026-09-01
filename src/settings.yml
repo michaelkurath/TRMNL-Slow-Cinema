@@ -30,9 +30,6 @@ oauth_token_field_name: ''
 oauth_expiry_field_name: ''
 oauth_expiry_strategy: ''
 oauth_fixed_expiry_ms: ''
-name: Slow Cinema
-description: A global movie, frame by frame
-refresh_interval: 15
 custom_fields:
 - keyname: author_bio
   field_type: author_bio
@@ -40,3 +37,6 @@ custom_fields:
   category: entertainment,discovery
   description: Join one shared global screening. Every viewer receives the same moment from the same film, advancing one movie-second every fifteen minutes.
   learn_more_url: https://github.com/michaelkurath/TRMNL-Slow-Cinema
+name: Slow Cinema
+description: A global movie, frame by frame
+refresh_interval: 15
