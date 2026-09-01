@@ -11,7 +11,7 @@ const screening = {
   startAt: "2026-09-05T18:00:00.000Z",
   slotSeconds: 900,
   sampleFps: 1,
-  frameCount: 766
+  frameCount: 709
 };
 
 const worker = createWorker([screening]);

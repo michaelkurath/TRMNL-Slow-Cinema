@@ -6,8 +6,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
+from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -26,6 +28,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--slug", required=True, help="Stable film identifier")
     parser.add_argument("--output", type=Path, default=Path("frames"))
     parser.add_argument("--sample-fps", type=int, default=1, choices=[1])
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=min(os.cpu_count() or 1, 8),
+        help="Parallel PNG optimization workers (default: up to 8)",
+    )
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -90,14 +98,44 @@ def extract(source: Path, output: Path, width: int, height: int) -> None:
 
 
 def optimize_frame(path: Path, levels: int) -> None:
-    with Image.open(path) as source:
-        grayscale = source.convert("L")
-        if levels == 2:
-            prepared = grayscale.convert("1", dither=Image.Dither.FLOYDSTEINBERG).convert("L")
-        else:
-            step = 255 / (levels - 1)
-            prepared = grayscale.point(lambda value: round(value / step) * step)
-        prepared.save(path, format="PNG", optimize=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.unlink(missing_ok=True)
+    try:
+        with Image.open(path) as source:
+            grayscale = source.convert("L")
+            if levels == 2:
+                prepared = grayscale.convert(
+                    "1", dither=Image.Dither.FLOYDSTEINBERG
+                ).convert("L")
+            else:
+                step = 255 / (levels - 1)
+                prepared = grayscale.point(lambda value: round(value / step) * step)
+            prepared.save(temporary, format="PNG", optimize=True)
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def optimize_frames(frames: list[Path], levels: int, workers: int) -> None:
+    if workers <= 0:
+        raise SystemExit("--workers must be a positive integer")
+    with ProcessPoolExecutor(max_workers=workers) as executor:
+        list(executor.map(optimize_frame, frames, [levels] * len(frames), chunksize=8))
+
+
+def validate_frames(frames: list[Path], width: int, height: int, levels: int) -> None:
+    for frame in frames:
+        if frame.stat().st_size == 0:
+            raise SystemExit(f"Generated an empty frame: {frame}")
+        with Image.open(frame) as image:
+            image.verify()
+        with Image.open(frame) as image:
+            if image.size != (width, height):
+                raise SystemExit(
+                    f"Unexpected frame dimensions for {frame}: {image.size}"
+                )
+            if image.convert("L").getcolors(maxcolors=levels + 1) is None:
+                raise SystemExit(f"Too many grayscale levels in {frame}")
 
 
 def main() -> None:
@@ -120,8 +158,10 @@ def main() -> None:
         device_dir = root / device
         extract(source, device_dir, config["width"], config["height"])
         frames = sorted(device_dir.glob("*.png"))
-        for frame in frames:
-            optimize_frame(frame, config["levels"])
+        optimize_frames(frames, config["levels"], args.workers)
+        validate_frames(
+            frames, config["width"], config["height"], config["levels"]
+        )
         counts[device] = len(frames)
 
     if len(set(counts.values())) != 1:

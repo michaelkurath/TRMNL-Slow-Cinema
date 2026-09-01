@@ -7,17 +7,26 @@
   "director": "Georges Méliès",
   "directorDeathYear": 1938,
   "source": {
-    "provider": "Wikimedia Commons",
-    "page": "https://commons.wikimedia.org/wiki/File:Le_Voyage_dans_la_Lune_(1902).webm",
-    "runtimeSeconds": 766,
-    "sourceSha256": null,
-    "downloadVerified": false
+    "provider": "User-supplied file",
+    "sourceFile": "Le_voyage_dans_la_lune_A_trip_to_the_moon__Georges_Mlis_1902_512kb.mp4",
+    "runtimeSeconds": 708.775442,
+    "width": 320,
+    "height": 240,
+    "videoFrameRate": "30000/1001",
+    "sourceSha256": "08a6184a35167dd6224f1a981c232b7db0721c1a1fe3c66821562a306ee5d83f",
+    "downloadVerified": true
+  },
+  "processing": {
+    "sampleFps": 1,
+    "frameCount": 709,
+    "og": { "width": 800, "height": 480, "grayscaleLevels": 2 },
+    "x": { "width": 1872, "height": 1404, "grayscaleLevels": 16 }
   },
   "rights": {
     "mark": "Public Domain Mark 1.0",
     "url": "https://creativecommons.org/publicdomain/mark/1.0/",
-    "worldwideReview": "Wikimedia Commons identifies the file as free of known copyright, related-rights and neighbouring-rights restrictions.",
+    "worldwideReview": "Wikimedia Commons identifies a scan of the 1902 film as free of known copyright, related-rights and neighbouring-rights restrictions; this supplied digital edition has not yet been matched to that file.",
     "editionApproved": false,
-    "notes": "Approve only this exact source after hashing it. Do not substitute a modern score, colourisation, restoration or new intertitle edition without a separate review."
+    "notes": "The exact visual file is hashed and its audio is discarded during processing. The underlying 1902 film is public domain, but the provenance of this digital edition still needs review before editionApproved can be set to true."
   }
 }
