@@ -64,9 +64,16 @@ npm test
 npm run dev
 ```
 
-Create the R2 buckets named in `wrangler.jsonc`, upload the generated frame
-directories with the same object keys, approve the date by enabling its entry
-in `src/schedule.js`, then deploy with `npm run deploy`.
+For automated deployment, add `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` as GitHub Actions repository secrets. Run **Provision A
+Trip to the Moon** once to download the identified source, verify its checksum,
+prepare both device variants, create the R2 buckets if required and upload all
+frames. Run **Deploy Worker** separately. The screening remains unpublished
+until its entry is explicitly enabled in `src/schedule.js`.
+
+Create the API token for the target account with **Workers Scripts: Edit** and
+**Workers R2 Storage: Edit**. The account ID is shown on the Cloudflare Workers
+overview. Do not put either value in the repository, workflow file or an issue.
 
 ## Scheduling model
 
@@ -85,5 +92,9 @@ Only source editions with verified worldwide reuse rights should be processed.
 Modern restorations, colourisation, intertitles and soundtracks require their
 own review even when the underlying silent film is public domain.
 
-The first planned screening is Georges Méliès' *A Trip to the Moon* (1902),
-using a source edition explicitly marked as public domain.
+The first planned screening is Georges Méliès' *A Trip to the Moon* (1902).
+The exact source edition is provided by Internet Archive under
+[CC BY-NC-SA 2.0 France](https://creativecommons.org/licenses/by-nc-sa/2.0/fr/deed.en).
+Credit: Georges Méliès; source edition uploaded by pesya via Internet Archive.
+Derived frames are non-commercial and share-alike; this restriction applies to
+the film material even if the surrounding plugin code uses a different license.

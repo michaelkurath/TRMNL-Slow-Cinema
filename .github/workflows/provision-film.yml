@@ -1,0 +1,59 @@
+name: Provision A Trip to the Moon
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: provision-a-trip-to-the-moon
+  cancel-in-progress: false
+
+env:
+  SOURCE_URL: https://archive.org/download/Levoyagedanslalune/Le_voyage_dans_la_lune_A_trip_to_the_moon__Georges_Mlis_1902_512kb.mp4
+  SOURCE_SHA256: 08a6184a35167dd6224f1a981c232b7db0721c1a1fe3c66821562a306ee5d83f
+  FILM_SLUG: a-trip-to-the-moon
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
+          python -m pip install -r processor/requirements.txt
+          npm ci
+
+      - name: Download and verify the exact source edition
+        run: |
+          curl --fail --location --retry 3 "$SOURCE_URL" --output "$RUNNER_TEMP/movie.mp4"
+          echo "$SOURCE_SHA256  $RUNNER_TEMP/movie.mp4" | sha256sum --check --strict
+
+      - name: Prepare OG and X frame sets
+        run: |
+          python processor/prepare_film.py "$RUNNER_TEMP/movie.mp4" \
+            --slug "$FILM_SLUG" \
+            --output "$RUNNER_TEMP/frames"
+
+      - name: Upload frames to R2
+        run: |
+          bash processor/upload_frames.sh \
+            "$RUNNER_TEMP/frames/films/$FILM_SLUG" \
+            trmnl-slow-cinema-frames \
+            trmnl-slow-cinema-frames-preview
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

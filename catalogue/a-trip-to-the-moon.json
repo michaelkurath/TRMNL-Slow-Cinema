@@ -7,7 +7,9 @@
   "director": "Georges Méliès",
   "directorDeathYear": 1938,
   "source": {
-    "provider": "User-supplied file",
+    "provider": "Internet Archive",
+    "page": "https://archive.org/details/Levoyagedanslalune",
+    "download": "https://archive.org/download/Levoyagedanslalune/Le_voyage_dans_la_lune_A_trip_to_the_moon__Georges_Mlis_1902_512kb.mp4",
     "sourceFile": "Le_voyage_dans_la_lune_A_trip_to_the_moon__Georges_Mlis_1902_512kb.mp4",
     "runtimeSeconds": 708.775442,
     "width": 320,
@@ -23,10 +25,12 @@
     "x": { "width": 1872, "height": 1404, "grayscaleLevels": 16 }
   },
   "rights": {
-    "mark": "Public Domain Mark 1.0",
-    "url": "https://creativecommons.org/publicdomain/mark/1.0/",
-    "worldwideReview": "Wikimedia Commons identifies a scan of the 1902 film as free of known copyright, related-rights and neighbouring-rights restrictions; this supplied digital edition has not yet been matched to that file.",
-    "editionApproved": false,
-    "notes": "The exact visual file is hashed and its audio is discarded during processing. The underlying 1902 film is public domain, but the provenance of this digital edition still needs review before editionApproved can be set to true."
+    "mark": "CC BY-NC-SA 2.0 France",
+    "url": "https://creativecommons.org/licenses/by-nc-sa/2.0/fr/deed.en",
+    "attribution": "Georges Méliès; source edition uploaded by pesya via Internet Archive.",
+    "commercialUseAllowed": false,
+    "shareAlikeRequired": true,
+    "editionApproved": true,
+    "notes": "The exact source download is identified and hashed. Audio is discarded during processing. Derived frames must remain non-commercial, retain attribution and be shared under the same license."
   }
 }
