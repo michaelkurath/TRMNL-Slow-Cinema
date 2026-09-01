@@ -1,0 +1,21 @@
+{% if status == "screening" and images.og and images.x %}
+<div class="slow-cinema">
+  <picture class="slow-cinema__picture">
+    <source media="(min-width: 1200px)" srcset="{{ images.x }}">
+    <img class="slow-cinema__image image" src="{{ images.og }}" alt="Current frame from {{ screening.title }}">
+  </picture>
+</div>
+{% else %}
+<div class="layout layout--col layout--center slow-cinema__status">
+  <div class="flex flex--col flex--center gap--medium text--center">
+    <span class="title title--large">Slow Cinema</span>
+    {% if status == "intermission" and next %}
+      <span class="description">Next screening</span>
+      <span class="title">{{ next.title }}</span>
+      <span class="label">{{ next.startAt | date: "%d %b %Y · %H:%M UTC" }}</span>
+    {% else %}
+      <span class="description">The cinema is currently between screenings.</span>
+    {% endif %}
+  </div>
+</div>
+{% endif %}

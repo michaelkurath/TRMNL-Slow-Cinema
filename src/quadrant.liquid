@@ -1,0 +1,10 @@
+{% if status == "screening" and images.og %}
+<div class="slow-cinema">
+  <img class="slow-cinema__image image" src="{{ images.og }}" alt="Current frame from {{ screening.title }}">
+</div>
+{% else %}
+<div class="layout layout--col layout--center slow-cinema__status text--center">
+  <span class="title title--small">Slow Cinema</span>
+  {% if next %}<span class="description text--small">Next: {{ next.title }}</span>{% else %}<span class="description text--small">Intermission</span>{% endif %}
+</div>
+{% endif %}

@@ -35,6 +35,25 @@ function publicSchedule(screenings) {
   });
 }
 
+function broadcastPayload(state, url, env) {
+  if (state.status !== "screening") {
+    return { ...state, images: null };
+  }
+
+  const override = url.searchParams.get("at");
+  const suffix = override && env.ALLOW_TIME_OVERRIDE === "true"
+    ? `?at=${encodeURIComponent(override)}`
+    : "";
+
+  return {
+    ...state,
+    images: {
+      og: `${url.origin}/current/og.png${suffix}`,
+      x: `${url.origin}/current/x.png${suffix}`
+    }
+  };
+}
+
 async function currentFrame(request, env, url, device, screenings) {
   if (!devices[device]) {
     return json({ error: "Unknown device", supported: Object.keys(devices) }, 404);
@@ -89,7 +108,8 @@ export function createWorker(screenings = schedule) {
       }
 
       if (url.pathname === "/api/now") {
-        return json(getBroadcastState(screenings, requestTime(url, env)));
+        const state = getBroadcastState(screenings, requestTime(url, env));
+        return json(broadcastPayload(state, url, env));
       }
 
       if (url.pathname === "/api/schedule") {

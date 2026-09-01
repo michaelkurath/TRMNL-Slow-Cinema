@@ -53,4 +53,12 @@ test("the API exposes current screening metadata", async () => {
   assert.equal(body.status, "screening");
   assert.equal(body.screening.title, "A Trip to the Moon");
   assert.equal(body.frameIndex, 2);
+  assert.equal(
+    body.images.og,
+    "https://slow.example/current/og.png?at=2026-09-05T18%3A31%3A00.000Z"
+  );
+  assert.equal(
+    body.images.x,
+    "https://slow.example/current/x.png?at=2026-09-05T18%3A31%3A00.000Z"
+  );
 });
