@@ -31,5 +31,5 @@ oauth_expiry_field_name: ''
 oauth_expiry_strategy: ''
 oauth_fixed_expiry_ms: ''
 name: Slow Cinema
-description:
-refresh_interval:
+description: ''
+refresh_interval: 15
